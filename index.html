@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Irene | Front-End Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Sora:wght@500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- 導覽列 -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">Irene</div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <!-- 主題切換按鈕 -->
+      <button id="theme-toggle" aria-label="切換主題" class="theme-toggle-btn">🌙</button>
+      <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</div>
+    </div>
+  </header>
+
+  <!-- Hero 區 -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">Irene</h1>
+      <p class="tagline">前端設計師 / 使用代碼建構視覺敘事</p>
+      <p class="intro">我擅長將設計語言落實於前端實作，讓每一個 UI 都有情緒、有節奏。</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn-primary">查看作品</a>
+        <a href="#contact" class="btn-outline">聯絡我</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects 區 -->
+  <section id="projects" class="projects">
+    <h2 class="section-title">Selected Works</h2>
+    <div class="project-grid">
+      <a href="https://chanvivi.github.io/NEW/index.html" target="_blank" class="btn-text" rel="noopener noreferrer">
+        <div class="project-preview fade-in">
+          <img src="img/pexels-cottonbro-4272615.jpg" alt="摯愛花藝品牌形象網站" />
+        </div>
+      </a>
+      <div class="project-info fade-in">
+        <h3>摯愛花藝 — 品牌形象網站</h3>
+        <p class="project-desc">視覺敘事 + 滑動動畫，展現品牌溫度與風格一致性。</p>
+        <ul class="tags">
+          <li>HTML</li><li>CSS</li><li>JavaScript</li>
+        </ul>
+        <a href="https://chanvivi.github.io/NEW/index.html" target="_blank" class="btn-text" rel="noopener noreferrer">查看 Demo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact 區 -->
+  <section id="contact" class="contact">
+    <div class="contact-card fade-in">
+      <h2>Let’s Build Together.</h2>
+      <p>如果你喜歡這樣的設計與代碼，歡迎合作或交流 👇</p>
+      <form class="contact-form" action="#" method="POST">
+        <input type="text" placeholder="你的名字" required />
+        <input type="email" placeholder="Email" required />
+        <textarea placeholder="你的訊息..." rows="5" required></textarea>
+        <button class="btn-primary" type="submit">送出</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Irene. All rights reserved.</p>
+  </footer>
+
+  <!-- 響應式選單切換 -->
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+
+  <!-- 滾動動畫 Intersection Observer -->
+  <script>
+    const fadeIns = document.querySelectorAll('.fade-in');
+    const options = {
+      threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    fadeIns.forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+  <script>
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const toggleBtn = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  // 根據主題顯示圖示（月亮 or 太陽）
+  function updateIcon(theme) {
+    toggleBtn.textContent = theme === 'dark' ? '🌚' : '🌝';
+  }
+
+  updateIcon(currentTheme);
+
+  toggleBtn.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') {
+      theme = 'light';
+    } else {
+      theme = 'dark';
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateIcon(theme);
+  });
+</script>
+
+</body>
+</html>
